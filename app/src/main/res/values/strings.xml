@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">openuai</string>
+
+    <string name="adicionar">adicionar</string>
+    <string name="confirmar">confirmar</string>
+    <string name="cancelar">cancelar</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>
