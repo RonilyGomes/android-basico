@@ -1,8 +1,16 @@
 <resources>
+    <!-- App -->
     <string name="app_name">openuai</string>
+    <string name="action_settings">Settings</string>
 
-    <string name="adicionar">adicionar</string>
+    <!-- Forms -->
+    <string name="add_proj">Adicionar Projeto</string>
+    <string name="titulo">Título</string>
+    <string name="descricao">Descrição</string>
+    <string name="disciplina">Disciplina</string>
+    <string name="salvar">salvar</string>
     <string name="confirmar">confirmar</string>
     <string name="cancelar">cancelar</string>
+
     <string name="title_activity_main">MainActivity</string>
 </resources>
