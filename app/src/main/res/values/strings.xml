@@ -11,6 +11,9 @@
     <string name="salvar">salvar</string>
     <string name="confirmar">confirmar</string>
     <string name="cancelar">cancelar</string>
+    <string name="editar">editar</string>
+    <string name="remover">remover</string>
+
 
     <string name="title_activity_main">MainActivity</string>
 </resources>

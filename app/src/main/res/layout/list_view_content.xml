@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/list_item_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="8dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/remover"
+        android:textColor="@drawable/button_text_color"
+        android:tint="@color/defaultButtonTextColor"
+        app:backgroundTint="@color/colorButtonOpenUAI"
+        app:fabCustomSize="38dp"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/edit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/delete_btn"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/editar"
+        android:textColor="@drawable/button_text_color"
+        android:tint="@color/defaultButtonTextColor"
+        app:backgroundTint="@color/colorButtonOpenUAI"
+        app:fabCustomSize="38dp"
+        app:srcCompat="@android:drawable/ic_menu_edit"/>
+
+</RelativeLayout>

@@ -36,14 +36,13 @@ class MainActivity : AppCompatActivity() {
         this.lvProjetos = findViewById(R.id.lvMainProjetos)
         this.adapter()
 
-        this.lvProjetos.setOnItemClickListener(OnClick()) // UPDATE
-        this.lvProjetos.setOnItemLongClickListener(OnLongClick()) // REMOVE
+//        this.lvProjetos.setOnItemClickListener(OnClick()) // UPDATE
+//        this.lvProjetos.setOnItemLongClickListener(OnLongClick()) // REMOVE
     }
 
     fun adapter(){
-        this.lvProjetos.adapter = ArrayAdapter<Projeto>(this,
-                android.R.layout.simple_list_item_1,
-                this.dao.select())
+        this.lvProjetos.adapter = MyAdapter(this,
+                android.R.layout.simple_list_item_1, this.dao.select())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -75,25 +74,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    inner class OnClick: AdapterView.OnItemClickListener{
-        override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-            if (p0 != null) {
-                var p = p0.adapter.getItem(p2) as Projeto
-                var it = Intent(this@MainActivity, AddProjectActivity::class.java)
-                it.putExtra("PROJETO", p)
-                startActivityForResult(it, UPDATE)
-            }
-        }
-    }
-
-    inner class OnLongClick : AdapterView.OnItemLongClickListener{
-        override fun onItemLongClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long): Boolean {
-            if (p0 != null) {
-                var p = p0.adapter.getItem(p2) as Projeto
-                dao.delete(p)
-                adapter()
-            }
-            return true
-        }
-    }
+//    inner class OnClick: AdapterView.OnItemClickListener{
+//        override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//            if (p0 != null) {
+//                var p = p0.adapter.getItem(p2) as Projeto
+//                var it = Intent(this@MainActivity, AddProjectActivity::class.java)
+//                it.putExtra("PROJETO", p)
+//                startActivityForResult(it, UPDATE)
+//            }
+//        }
+//    }
+//
+//    inner class OnLongClick : AdapterView.OnItemLongClickListener{
+//        override fun onItemLongClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long): Boolean {
+//            if (p0 != null) {
+//                var p = p0.adapter.getItem(p2) as Projeto
+//                dao.delete(p)
+//                adapter()
+//            }
+//            return true
+//        }
+//    }
 }
