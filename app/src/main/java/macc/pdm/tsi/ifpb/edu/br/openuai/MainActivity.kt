@@ -18,9 +18,12 @@ class MainActivity : AppCompatActivity() {
     val INSERT = 1
     val UPDATE = 2
     val LOGIN_WITH_ADD_PROJECT = 3
+    val LOGIN_WITH_UPDATE_PROJECT = 4
+
 
     private lateinit var dao: ProjetoDAO
     private lateinit var lvProjetos: ListView
+    private var login: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener { view ->
             val it = Intent(this, LoginActivity::class.java)
+            it.putExtra("NEXT", "REGISTER")
+            it.putExtra("LOGIN", login)
             startActivityForResult(it, LOGIN_WITH_ADD_PROJECT)
-//            val it = Intent(this, AddProjectActivity::class.java)
-//            startActivityForResult(it, INSERT)
         }
 
         this.lvProjetos = findViewById(R.id.lvMainProjetos)
@@ -64,6 +67,8 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK){
+            this.login = data?.getStringExtra("LOGIN")
+
             if(requestCode == INSERT || requestCode == UPDATE) {
                 val projeto = data?.getSerializableExtra("PROJETO") as Projeto
 

@@ -37,11 +37,25 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private var mAuthTask: UserLoginTask? = null
-    private var pessoas: List<String> = listOf("teste@teste")
+    private var pessoas: List<String> = listOf("t@t")
+    private lateinit var projeto: Projeto
+    val INSERT = 1
+    val UPDATE = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val next:String = intent.getStringExtra("NEXT")
+        if(intent.getStringExtra("LOGIN") != null) {
+            var it = Intent()
+
+            it.putExtra("LOGIN", intent.getStringExtra("LOGIN"))
+            setResult(Activity.RESULT_OK, it)
+
+            finish()
+        }
+
         // Set up the login form.
         populateAutoComplete()
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
@@ -53,6 +67,37 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         })
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK){
+//            projeto = data?.getSerializableExtra("PROJETO") as Projeto
+
+            setResult(Activity.RESULT_OK, data)
+            finish()
+
+//            if(requestCode == INSERT || requestCode == UPDATE) {
+//                val projeto = data?.getSerializableExtra("PROJETO") as Projeto
+//
+//                if(requestCode == INSERT) {
+//                    this.dao.insert(projeto)
+//                }
+//                else {
+//                    this.dao.update(projeto)
+//                }
+//            }
+//            else if(requestCode == LOGIN_WITH_ADD_PROJECT) {
+//                val user = data?.getStringExtra("LOGIN")
+//
+//                if(user != null) {
+//                    val it = Intent(this, AddProjectActivity::class.java)
+//                    startActivityForResult(it, INSERT)
+//                }
+//            }
+//            this.adapter()
+        }
     }
 
     private fun populateAutoComplete() {
@@ -265,12 +310,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
             if (success!!) {
                 val index = pessoas.indexOf(mEmail)
-                Log.e("BUG", pessoas.get(index))
 
                 var it = Intent()
 
                 it.putExtra("LOGIN", pessoas.get(index))
                 setResult(Activity.RESULT_OK, it)
+
                 finish()
             } else {
                 password.error = getString(R.string.error_incorrect_password)
@@ -281,6 +326,10 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         override fun onCancelled() {
             mAuthTask = null
             showProgress(false)
+        }
+
+        fun next(): String? {
+            return intent.getStringExtra("NEXT")
         }
     }
 

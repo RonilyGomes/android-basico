@@ -43,8 +43,9 @@ open class MyAdapter(context: Context, resource: Int, list: ArrayList<Projeto>) 
             context?.startActivity(it)
         })
         editBtn?.setOnClickListener(View.OnClickListener {
-            var it = Intent(context, AddProjectActivity::class.java)
+            var it = Intent(context, LoginActivity::class.java)
             it.putExtra("PROJETO", list[position])
+            it.putExtra("NEXT", "UPDATE")
             (context as Activity).startActivityForResult(it, UPDATE)
         })
 
