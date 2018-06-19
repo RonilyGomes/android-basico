@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     val INSERT = 1
     val UPDATE = 2
+    val LOGIN_WITH_ADD_PROJECT = 3
 
     private lateinit var dao: ProjetoDAO
     private lateinit var lvProjetos: ListView
@@ -29,8 +30,10 @@ class MainActivity : AppCompatActivity() {
         this.dao = ProjetoDAO(this)
 
         fab.setOnClickListener { view ->
-            val it = Intent(this, AddProjectActivity::class.java)
-            startActivityForResult(it, INSERT)
+            val it = Intent(this, LoginActivity::class.java)
+            startActivityForResult(it, LOGIN_WITH_ADD_PROJECT)
+//            val it = Intent(this, AddProjectActivity::class.java)
+//            startActivityForResult(it, INSERT)
         }
 
         this.lvProjetos = findViewById(R.id.lvMainProjetos)
@@ -61,15 +64,24 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK){
-            val projeto = data?.getSerializableExtra("PROJETO") as Projeto
-            if (requestCode == INSERT){
-                this.dao.insert(projeto)
+            if(requestCode == INSERT || requestCode == UPDATE) {
+                val projeto = data?.getSerializableExtra("PROJETO") as Projeto
+
+                if(requestCode == INSERT) {
+                    this.dao.insert(projeto)
+                }
+                else {
+                    this.dao.update(projeto)
+                }
             }
-            else if (requestCode == UPDATE){
-                this.dao.update(projeto)
+            else if(requestCode == LOGIN_WITH_ADD_PROJECT) {
+                val user = data?.getStringExtra("LOGIN")
+
+                if(user != null) {
+                    val it = Intent(this, AddProjectActivity::class.java)
+                    startActivityForResult(it, INSERT)
+                }
             }
-            Log.i("PESSOA", "${projeto.id} - ${projeto.titulo} - " +
-                    "${projeto.disciplina} - ${projeto.descricao}")
             this.adapter()
         }
     }
