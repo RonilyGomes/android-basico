@@ -18,11 +18,14 @@ open class MyAdapter(context: Context, resource: Int, list: ArrayList<Projeto>) 
     var list: ArrayList<Projeto>
     var vi: LayoutInflater
     val UPDATE = 2
+    val DELETE = 4
+    private lateinit var session: Session
 
     init {
         this.resource = resource
         this.list = list
         this.vi = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        this.session = Session(context)
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
@@ -38,18 +41,32 @@ open class MyAdapter(context: Context, resource: Int, list: ArrayList<Projeto>) 
         val editBtn = view?.findViewById<FloatingActionButton>(R.id.edit_btn)
 
         deleteBtn?.setOnClickListener(View.OnClickListener {
-            dao.delete(list[position])
-            var it = Intent(context, MainActivity::class.java)
-            context?.startActivity(it)
+            if(session.hasLogin()) {
+                dao.delete(list[position])
+                val it = Intent(context, MainActivity::class.java)
+                context?.startActivity(it)
+            }
+            else {
+                session.next("" + MainActivity::class.java + ":DELETE")
+                val it = Intent(context, LoginActivity::class.java)
+                it.putExtra("PROJETO", list[position])
+                (context as Activity).startActivityForResult(it, DELETE)
+            }
         })
         editBtn?.setOnClickListener(View.OnClickListener {
-            var it = Intent(context, LoginActivity::class.java)
-            it.putExtra("PROJETO", list[position])
-            it.putExtra("NEXT", "UPDATE")
-            (context as Activity).startActivityForResult(it, UPDATE)
+            if(session.hasLogin()) {
+                val it = Intent(context, AddProjectActivity::class.java)
+                it.putExtra("PROJETO", list[position])
+                (context as Activity).startActivityForResult(it, UPDATE)
+            }
+            else {
+                session.next("" + AddProjectActivity::class.java + ":UPDATE")
+                val it = Intent(context, LoginActivity::class.java)
+                it.putExtra("PROJETO", list[position])
+                (context as Activity).startActivityForResult(it, UPDATE)
+            }
         })
 
         return view
     }
-
 }

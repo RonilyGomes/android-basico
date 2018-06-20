@@ -26,6 +26,7 @@ import android.Manifest.permission.READ_CONTACTS
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -38,23 +39,20 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     private var mAuthTask: UserLoginTask? = null
     private var pessoas: List<String> = listOf("t@t")
-    private lateinit var projeto: Projeto
-    val INSERT = 1
+    private lateinit var session: Session
+    private lateinit var dao: UserDAO
     val UPDATE = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val next:String = intent.getStringExtra("NEXT")
-        if(intent.getStringExtra("LOGIN") != null) {
-            var it = Intent()
+        this.session = Session(this)
 
-            it.putExtra("LOGIN", intent.getStringExtra("LOGIN"))
-            setResult(Activity.RESULT_OK, it)
 
-            finish()
-        }
+//        Log.e("TESTE", dao.select().toString())
+
+        val button = findViewById<Button>(R.id.btAddUserRegister)
 
         // Set up the login form.
         populateAutoComplete()
@@ -66,6 +64,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             false
         })
 
+        button.setOnClickListener {
+            val it = Intent(this, AddUserActivity::class.java)
+            startActivity(it)
+        }
+
+
         email_sign_in_button.setOnClickListener { attemptLogin() }
     }
 
@@ -73,30 +77,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK){
-//            projeto = data?.getSerializableExtra("PROJETO") as Projeto
+            val it = Intent()
 
-            setResult(Activity.RESULT_OK, data)
+            it.putExtra("PROJETO", data?.getSerializableExtra("PROJETO"))
+
+            setResult(Activity.RESULT_OK, it)
             finish()
-
-//            if(requestCode == INSERT || requestCode == UPDATE) {
-//                val projeto = data?.getSerializableExtra("PROJETO") as Projeto
-//
-//                if(requestCode == INSERT) {
-//                    this.dao.insert(projeto)
-//                }
-//                else {
-//                    this.dao.update(projeto)
-//                }
-//            }
-//            else if(requestCode == LOGIN_WITH_ADD_PROJECT) {
-//                val user = data?.getStringExtra("LOGIN")
-//
-//                if(user != null) {
-//                    val it = Intent(this, AddProjectActivity::class.java)
-//                    startActivityForResult(it, INSERT)
-//                }
-//            }
-//            this.adapter()
         }
     }
 
@@ -299,7 +285,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             } catch (e: InterruptedException) {
                 return false
             }
-            Log.e("BACKGROUND-IF", pessoas.toString())
 
             return (pessoas.indexOf(mEmail) >= 0)
         }
@@ -309,14 +294,33 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                val index = pessoas.indexOf(mEmail)
+//                val user:User = User(mEmail, mPassword)
+                session.login(mEmail)
 
-                var it = Intent()
+                if(session.hasNext()) {
+                    val action = session.getNext().split(":")[1]
 
-                it.putExtra("LOGIN", pessoas.get(index))
-                setResult(Activity.RESULT_OK, it)
+                    if(action == "DELETE") {
+                        session.nextClear()
+                        val it = Intent(this@LoginActivity, MainActivity::class.java)
+                        it.putExtra("PROJETO", intent.getSerializableExtra("PROJETO"))
 
-                finish()
+                        setResult(Activity.RESULT_OK, it)
+                        finish()
+                    }
+                    else if(action == "UPDATE"){
+                        session.nextClear()
+                        val it = Intent(this@LoginActivity, AddProjectActivity::class.java)
+                        it.putExtra("PROJETO", intent.getSerializableExtra("PROJETO"))
+                        startActivityForResult(it, UPDATE)
+                    }
+                }
+                else {
+                    val it = Intent()
+
+                    setResult(Activity.RESULT_OK, it)
+                    finish()
+                }
             } else {
                 password.error = getString(R.string.error_incorrect_password)
                 password.requestFocus()
@@ -327,10 +331,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             mAuthTask = null
             showProgress(false)
         }
-
-        fun next(): String? {
-            return intent.getStringExtra("NEXT")
-        }
     }
 
     companion object {
@@ -339,11 +339,5 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
          * Id to identity READ_CONTACTS permission request.
          */
         private val REQUEST_READ_CONTACTS = 0
-
-        /**
-         * A dummy authentication store containing known user names and passwords.
-         * TODO: remove after connecting to a real authentication system.
-         */
-        private val DUMMY_CREDENTIALS = arrayOf("foo@example.com:hello", "bar@example.com:world")
     }
 }

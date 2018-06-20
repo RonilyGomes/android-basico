@@ -13,6 +13,9 @@
     <string name="cancelar">cancelar</string>
     <string name="editar">editar</string>
     <string name="remover">remover</string>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="register">Cadastre-se</string>
 
 
     <string name="title_activity_main">MainActivity</string>
@@ -20,8 +23,8 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_password">Senha</string>
+    <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -30,4 +33,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_add_user">AddUserActivity</string>
 </resources>
