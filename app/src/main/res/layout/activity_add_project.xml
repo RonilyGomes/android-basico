@@ -45,13 +45,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/etAddProjDisciplina"
-            android:hint="@string/disciplina"
-            android:inputType="textAutoCorrect"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/spnAddProjDisciplina"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/spinner_disciplina"
+            android:textAlignment="center"
+            android:prompt="@string/disciplina_prompt" />
 
     </LinearLayout>
 

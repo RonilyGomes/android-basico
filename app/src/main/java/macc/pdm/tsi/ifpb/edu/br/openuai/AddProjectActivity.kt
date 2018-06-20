@@ -8,10 +8,14 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
+import android.widget.ArrayAdapter
+
+
 
 class AddProjectActivity : AppCompatActivity() {
     private lateinit var etTitulo: EditText
-    private lateinit var etDisciplina: EditText
+    private lateinit var spnDisciplina: Spinner
     private lateinit var etDescricao: EditText
     private lateinit var btSalvar: Button
     private lateinit var btCancelar: Button
@@ -21,7 +25,7 @@ class AddProjectActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_project)
 
         this.etTitulo = findViewById(R.id.etAddProjTitulo)
-        this.etDisciplina = findViewById(R.id.etAddProjDisciplina)
+        this.spnDisciplina = findViewById(R.id.spnAddProjDisciplina)
         this.etDescricao = findViewById(R.id.etAddProjDescricao)
         this.btSalvar = findViewById(R.id.btAddProjSalvar)
         this.btCancelar = findViewById(R.id.btAddProjCancelar)
@@ -34,14 +38,18 @@ class AddProjectActivity : AppCompatActivity() {
             projeto = projeto as Projeto
 
             this.etTitulo.setText(projeto.titulo)
-            this.etDisciplina.setText(projeto.disciplina.toString())
+
+            val myAdap = this.spnDisciplina.getAdapter() as ArrayAdapter<String>
+            val spinnerPosition = myAdap.getPosition(projeto.disciplina)
+            this.spnDisciplina.setSelection(spinnerPosition)
             this.etDescricao.setText(projeto.descricao.toString())
+
         }
     }
 
     fun salvar(view: View){
         val titulo = this.etTitulo.text.toString()
-        val disciplina = this.etDisciplina.text.toString()
+        val disciplina = this.spnDisciplina.selectedItem.toString()
         val descricao = this.etDescricao.text.toString()
         var projeto = intent.getSerializableExtra("PROJETO")
 

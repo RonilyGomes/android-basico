@@ -35,4 +35,31 @@
         completions."
     </string>
     <string name="title_activity_add_user">Cadastro</string>
+
+    <!-- Spinner Disciplina -->
+    <string name="disciplina_prompt">Disciplina</string>
+    <string-array name="spinner_disciplina">
+        <item>Algoritmo e Programacao Estruturada</item>
+        <item>Analise e Projeto de Sistemas</item>
+        <item>Banco de Dados I</item>
+        <item>Banco de Dados II</item>
+        <item>Comercio Eletronico</item>
+        <item>Estruturas de Dados</item>
+        <item>Fundamentos da Metodologia Cientifica</item>
+        <item>Fundamentos de Redes de Computadores</item>
+        <item>Gerencia de Projetos de Software</item>
+        <item>Lingua Portuguesa</item>
+        <item>Linguagens de Marcacao</item>
+        <item>Linguagens de Script</item>
+        <item>Metodos e Tecnicas de Pesquisa</item>
+        <item>Padroes de Projeto de Software</item>
+        <item>Persistencia de Objetos</item>
+        <item>Psicologia do Trabalho</item>
+        <item>Protocolos de Interconexao de Redes de Computadores</item>
+        <item>Programacao Orientada a Objetos</item>
+        <item>Programacao para Web I</item>
+        <item>Programacao para Web II</item>
+        <item>Programacao para Dispositivos Moveis</item>
+        <item>Seguranca de Dados</item>
+    </string-array>
 </resources>
