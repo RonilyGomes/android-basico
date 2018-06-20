@@ -30,30 +30,27 @@ import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_login.*
 
-/**
- * A login screen that offers login via email/password.
- */
 class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private var mAuthTask: UserLoginTask? = null
-    private var pessoas: List<String> = listOf("t@t")
-    private lateinit var session: Session
-    private lateinit var dao: UserDAO
+    //constantes de ação
     val UPDATE = 2
     val REGISTER = 5
+
+    private var mAuthTask: UserLoginTask? = null
+    private lateinit var users: List<String>
+    private lateinit var session: Session
+    private lateinit var dao: UserDAO
+    private lateinit var register: Button
+    private lateinit var cancel: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         this.session = Session(this)
-
-
-//        Log.e("TESTE", dao.select().toString())
-
-        val button = findViewById<Button>(R.id.btAddUserRegister)
+        this.dao = UserDAO(this)
+        this.users = dao.select()
+        this.register = findViewById(R.id.btAddUserRegister)
+        this.cancel = findViewById(R.id.btLoginCancelar)
 
         // Set up the login form.
         populateAutoComplete()
@@ -65,11 +62,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             false
         })
 
-        button.setOnClickListener {view ->
+        register.setOnClickListener {view ->
             val it = Intent(this, AddUserActivity::class.java)
             startActivityForResult(it, REGISTER)
         }
 
+        cancel.setOnClickListener { cancelar() }
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
     }
@@ -265,6 +263,10 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         email.setAdapter(adapter)
     }
 
+    fun cancelar() {
+        finish()
+    }
+
     object ProfileQuery {
         val PROJECTION = arrayOf(
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -279,6 +281,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
+        private var user:User = User(mEmail, mPassword)
+
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
@@ -289,7 +293,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 return false
             }
 
-            return (pessoas.indexOf(mEmail) >= 0)
+            return (users.indexOf(user.toString()) >= 0)
         }
 
         override fun onPostExecute(success: Boolean?) {
@@ -297,7 +301,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                val user:User = User(mEmail, mPassword)
+                val user = User(mEmail, mPassword)
                 session.login(user.toString())
 
                 if(session.hasNext()) {

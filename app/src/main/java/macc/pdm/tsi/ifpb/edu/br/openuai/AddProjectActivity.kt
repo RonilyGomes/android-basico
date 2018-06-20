@@ -4,16 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.ArrayAdapter
-
-
+import android.widget.*
 
 class AddProjectActivity : AppCompatActivity() {
+    private lateinit var etHeader: TextView
     private lateinit var etTitulo: EditText
     private lateinit var spnDisciplina: Spinner
     private lateinit var etDescricao: EditText
@@ -24,17 +18,19 @@ class AddProjectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_project)
 
+        this.etHeader = findViewById(R.id.etHeader)
         this.etTitulo = findViewById(R.id.etAddProjTitulo)
         this.spnDisciplina = findViewById(R.id.spnAddProjDisciplina)
         this.etDescricao = findViewById(R.id.etAddProjDescricao)
         this.btSalvar = findViewById(R.id.btAddProjSalvar)
         this.btCancelar = findViewById(R.id.btAddProjCancelar)
 
-        this.btSalvar.setOnClickListener({ salvar(it) })
-        this.btCancelar.setOnClickListener({ cancelar(it) })
+        this.btSalvar.setOnClickListener({ salvar() })
+        this.btCancelar.setOnClickListener({ cancelar() })
 
         var projeto = intent.getSerializableExtra("PROJETO")
         if (projeto != null){
+            etHeader.text = "Editar"
             projeto = projeto as Projeto
 
             this.etTitulo.setText(projeto.titulo)
@@ -47,30 +43,29 @@ class AddProjectActivity : AppCompatActivity() {
         }
     }
 
-    fun salvar(view: View){
+    fun salvar(){
         val titulo = this.etTitulo.text.toString()
         val disciplina = this.spnDisciplina.selectedItem.toString()
         val descricao = this.etDescricao.text.toString()
         var projeto = intent.getSerializableExtra("PROJETO")
 
-        if (projeto == null){
-            Log.e("PROJETO", "novo projeto")
+        if (projeto == null) {
             projeto = Projeto(titulo, disciplina, descricao)
-        }else{
-            Log.e("PROJETO", "atualizando projeto")
+        }
+        else{
             projeto = projeto as Projeto
             projeto.titulo = titulo
             projeto.disciplina = disciplina
             projeto.descricao = descricao
         }
 
-        var it = Intent()
+        val it = Intent()
         it.putExtra("PROJETO", projeto)
         setResult(Activity.RESULT_OK, it)
         finish()
     }
 
-    fun cancelar(view: View){
+    fun cancelar(){
         finish()
     }
 }

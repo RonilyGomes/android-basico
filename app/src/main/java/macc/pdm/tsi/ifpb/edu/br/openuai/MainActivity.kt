@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
@@ -12,10 +11,11 @@ import android.widget.ListView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    // Constantes de ação
     val INSERT = 1
     val UPDATE = 2
-    val LOGIN  = 3
-    val DELETE = 4
+    val DELETE = 3
+    val LOGIN  = 4
 
     private lateinit var dao: ProjetoDAO
     private lateinit var lvProjetos: ListView
@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         this.dao = ProjetoDAO(this)
         this.session = Session(this)
-        session.logout()
+
+        session.logout() // exclusivo para testes
 
         fab.setOnClickListener { view ->
             if(session.hasLogin()) {
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 else if(requestCode == UPDATE) {
                     this.dao.update(projeto)
                 }
-                else {
+                else{
                     this.dao.delete(projeto)
                 }
             }

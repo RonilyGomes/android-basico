@@ -69,15 +69,6 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/btAddProjCancelar"
-                    android:text="@string/cancelar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@drawable/button_text_color"
-                    android:layout_weight="1"/>
-
-                <Button
                     android:id="@+id/email_sign_in_button"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
@@ -85,6 +76,15 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/action_sign_in"
                     android:textStyle="bold"
+                    android:textColor="@drawable/button_text_color"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/btLoginCancelar"
+                    android:text="@string/cancelar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:textColor="@drawable/button_text_color"
                     android:layout_weight="1"/>
 

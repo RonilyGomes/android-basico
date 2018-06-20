@@ -24,8 +24,6 @@ import android.widget.TextView
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.app.Activity
-import android.content.Intent
-import android.util.Log
 import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_login.*
@@ -40,16 +38,18 @@ class AddUserActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     private var mAuthTask: UserLoginTask? = null
     private lateinit var session: Session
     private lateinit var dao: UserDAO
-    private lateinit var button_register: Button
-    val UPDATE = 2
+    private lateinit var register: Button
+    private lateinit var cancel: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         this.session = Session(this)
-        this.button_register = findViewById<Button>(R.id.btAddUserRegister)
-        this.button_register.visibility = View.INVISIBLE
+        this.dao = UserDAO(this)
+        this.cancel = findViewById(R.id.btLoginCancelar)
+        this.register = findViewById(R.id.btAddUserRegister)
+        this.register.visibility = View.INVISIBLE
 
         // Set up the login form.
         populateAutoComplete()
@@ -60,6 +60,8 @@ class AddUserActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             }
             false
         })
+
+        cancel.setOnClickListener { cancelar() }
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
     }
@@ -238,6 +240,10 @@ class AddUserActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         email.setAdapter(adapter)
     }
 
+    fun cancelar() {
+        finish()
+    }
+
     object ProfileQuery {
         val PROJECTION = arrayOf(
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -268,10 +274,10 @@ class AddUserActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                val user:User = User(mEmail, mPassword)
+                val user = User(mEmail, mPassword)
                 session.login(user.toString())
+                dao.insert(user)
 
-                val it = Intent()
                 setResult(Activity.RESULT_OK)
                 finish()
             } else {

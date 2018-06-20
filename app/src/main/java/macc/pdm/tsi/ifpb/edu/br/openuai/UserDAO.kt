@@ -21,8 +21,8 @@ class UserDAO (var context: Context){
         this.banco.writableDatabase.insert("user", null, cv)
     }
 
-    fun select() : ArrayList<User>{
-        val lista = ArrayList<User>()
+    fun select() : ArrayList<String>{
+        val lista = ArrayList<String>()
         val colunas = arrayOf("id", "email", "password")
         val cursor = this.banco.readableDatabase.query("user", colunas, null, null, null, null, null)
 
@@ -33,8 +33,9 @@ class UserDAO (var context: Context){
                 val id = cursor.getInt(cursor.getColumnIndex("id"))
                 val email = cursor.getString(cursor.getColumnIndex("email"))
                 val password = cursor.getString(cursor.getColumnIndex("password"))
+                val user = User(email, password, id)
 
-                lista.add(User(email, password, id))
+                lista.add(user.toString())
             }while(cursor.moveToNext())
         }
 
