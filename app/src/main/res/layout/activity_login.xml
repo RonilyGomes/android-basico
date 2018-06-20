@@ -64,38 +64,29 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
-                android:gravity="center"
-                android:layout_weight="1"
+            <Button
+                android:id="@+id/email_sign_in_button"
+                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_sign_in"
+                android:textStyle="bold"
+                android:textColor="@drawable/button_text_color"/>
 
-                <Button
-                    android:id="@+id/email_sign_in_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/action_sign_in"
-                    android:textStyle="bold"
-                    android:textColor="@drawable/button_text_color"/>
+            <Button
+                android:id="@+id/btAddUserRegister"
+                android:text="@string/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/button_text_color" />
 
-                <Button
-                    android:id="@+id/btAddUserRegister"
-                    android:text="@string/register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@drawable/button_text_color" />
-
-                <Button
-                    android:id="@+id/btAddProjCancelar"
-                    android:text="@string/cancelar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@drawable/button_text_color" />
-            </LinearLayout>
-
+            <Button
+                android:id="@+id/btAddProjCancelar"
+                android:text="@string/cancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/button_text_color" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

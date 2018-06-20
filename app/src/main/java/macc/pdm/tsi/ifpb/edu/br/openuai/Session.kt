@@ -29,7 +29,6 @@ class Session(cntx: Context) {
     }
 
     fun login(user: String?) {
-//        val login: String = user?.email + ":" +user?.password
         prefs.edit().putString("login", user).commit()
     }
 
@@ -38,7 +37,7 @@ class Session(cntx: Context) {
     }
 
     fun hasLogin(): Boolean {
-        return !getLogin().isEmpty()
+        return getLogin().isNotEmpty()
     }
 
     fun logout() {

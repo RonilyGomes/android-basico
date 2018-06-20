@@ -42,6 +42,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     private lateinit var session: Session
     private lateinit var dao: UserDAO
     val UPDATE = 2
+    val REGISTER = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +65,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             false
         })
 
-        button.setOnClickListener {
+        button.setOnClickListener {view ->
             val it = Intent(this, AddUserActivity::class.java)
-            startActivity(it)
+            startActivityForResult(it, REGISTER)
         }
 
 
@@ -79,7 +80,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         if (resultCode == Activity.RESULT_OK){
             val it = Intent()
 
-            it.putExtra("PROJETO", data?.getSerializableExtra("PROJETO"))
+            if(requestCode != REGISTER) {
+                it.putExtra("PROJETO", data?.getSerializableExtra("PROJETO"))
+            }
 
             setResult(Activity.RESULT_OK, it)
             finish()
@@ -294,8 +297,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-//                val user:User = User(mEmail, mPassword)
-                session.login(mEmail)
+                val user:User = User(mEmail, mPassword)
+                session.login(user.toString())
 
                 if(session.hasNext()) {
                     val action = session.getNext().split(":")[1]
