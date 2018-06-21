@@ -79,18 +79,20 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/btAddProjCancelar"
+            android:text="@string/cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/button_text_color" />
+
+        <Button
             android:id="@+id/btAddProjSalvar"
             android:text="@string/salvar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@drawable/button_text_color" />
 
-        <Button
-            android:id="@+id/btAddProjCancelar"
-            android:text="@string/cancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/button_text_color" />
+
 
     </LinearLayout>
 

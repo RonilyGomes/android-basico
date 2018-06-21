@@ -6,7 +6,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkOpenUAI</item>
         <item name="colorPrimary">@color/colorPrimaryOpenUAI</item>
         <item name="colorButtonNormal">@color/colorButtonOpenUAI</item>
-        <item name="android:fontFamily">Raleway</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

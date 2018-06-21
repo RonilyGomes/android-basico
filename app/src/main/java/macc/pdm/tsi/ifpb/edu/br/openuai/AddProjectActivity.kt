@@ -30,7 +30,7 @@ class AddProjectActivity : AppCompatActivity() {
 
         var projeto = intent.getSerializableExtra("PROJETO")
         if (projeto != null){
-            etHeader.text = "Editar"
+            etHeader.text = getString(R.string.alt_proj)
             projeto = projeto as Projeto
 
             this.etTitulo.setText(projeto.titulo)

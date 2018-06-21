@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
+import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,6 +17,9 @@ class MainActivity : AppCompatActivity() {
     val UPDATE = 2
     val DELETE = 3
     val LOGIN  = 4
+
+    // Constantes de menu
+    val MENU_LOGIN_LOGOUT = Menu.FIRST
 
     private lateinit var dao: ProjetoDAO
     private lateinit var lvProjetos: ListView
@@ -28,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         this.dao = ProjetoDAO(this)
         this.session = Session(this)
 
-        session.logout() // exclusivo para testes
+        session.logout()
 
         fab.setOnClickListener { view ->
             if(session.hasLogin()) {
@@ -55,10 +59,31 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.clear()
+        if (session.hasLogin())
+            menu.add(0, MENU_LOGIN_LOGOUT, Menu.NONE, R.string.logout)
+        else{
+            menu.add(0, MENU_LOGIN_LOGOUT, Menu.NONE, R.string.action_sign_in)
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            MENU_LOGIN_LOGOUT  -> {
+                if(session.hasLogin()) {
+                    session.logout()
+                    Toast.makeText(this, R.string.toast_logout, Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    val it = Intent(this, LoginActivity::class.java)
+                    startActivityForResult(it, LOGIN)
+                }
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 
@@ -71,12 +96,15 @@ class MainActivity : AppCompatActivity() {
 
                 if(requestCode == INSERT) {
                     this.dao.insert(projeto)
+                    Toast.makeText(this, R.string.toast_adicionado, Toast.LENGTH_SHORT).show()
                 }
                 else if(requestCode == UPDATE) {
                     this.dao.update(projeto)
+                    Toast.makeText(this, R.string.toast_alterado, Toast.LENGTH_SHORT).show()
                 }
                 else{
                     this.dao.delete(projeto)
+                    Toast.makeText(this, R.string.toast_removido, Toast.LENGTH_SHORT).show()
                 }
             }
             else if(requestCode == LOGIN) {

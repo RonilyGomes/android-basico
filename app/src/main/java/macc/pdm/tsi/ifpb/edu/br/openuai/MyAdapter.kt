@@ -18,7 +18,7 @@ open class MyAdapter(context: Context, resource: Int, list: ArrayList<Projeto>) 
     var list: ArrayList<Projeto>
     var vi: LayoutInflater
     val UPDATE = 2
-    val DELETE = 4
+    val DELETE = 3
     private lateinit var session: Session
 
     init {
@@ -41,15 +41,13 @@ open class MyAdapter(context: Context, resource: Int, list: ArrayList<Projeto>) 
         val editBtn = view?.findViewById<FloatingActionButton>(R.id.edit_btn)
 
         deleteBtn?.setOnClickListener(View.OnClickListener {
+            val it = Intent(context, LoginActivity::class.java)
+            it.putExtra("PROJETO", list[position])
             if(session.hasLogin()) {
-                dao.delete(list[position])
-                val it = Intent(context, MainActivity::class.java)
-                context?.startActivity(it)
+                (context as Activity).startActivityForResult(it, DELETE)
             }
             else {
                 session.next("" + MainActivity::class.java + ":DELETE")
-                val it = Intent(context, LoginActivity::class.java)
-                it.putExtra("PROJETO", list[position])
                 (context as Activity).startActivityForResult(it, DELETE)
             }
         })

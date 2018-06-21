@@ -26,11 +26,16 @@ import android.Manifest.permission.READ_CONTACTS
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import android.util.Patterns
 import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
+
+    // Email Pattern
+    val pattern = Patterns.EMAIL_ADDRESS
+
     //constantes de ação
     val UPDATE = 2
     val REGISTER = 5
@@ -51,6 +56,14 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         this.users = dao.select()
         this.register = findViewById(R.id.btAddUserRegister)
         this.cancel = findViewById(R.id.btLoginCancelar)
+
+        if(session.hasLogin()){
+            val projeto = intent.getSerializableExtra("PROJETO")
+            val it = Intent()
+            it.putExtra("PROJETO", projeto)
+            setResult(Activity.RESULT_OK, it)
+            finish()
+        }
 
         // Set up the login form.
         populateAutoComplete()
@@ -179,12 +192,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private fun isEmailValid(email: String): Boolean {
         //TODO: Replace this with your own logic
-        return email.contains("@")
+        return pattern.matcher(email).matches()
     }
 
     private fun isPasswordValid(password: String): Boolean {
         //TODO: Replace this with your own logic
-        return password.length > 4
+        return password.length > 3
     }
 
     /**

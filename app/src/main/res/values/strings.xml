@@ -5,6 +5,7 @@
 
     <!-- Forms -->
     <string name="add_proj">Adicionar Projeto</string>
+    <string name="alt_proj">Alterar Projeto</string>
     <string name="add_user">Cadastro</string>
     <string name="titulo">Título</string>
     <string name="descricao">Descrição</string>
@@ -17,7 +18,6 @@
     <string name="email">Email</string>
     <string name="password">Senha</string>
     <string name="register">Cadastre-se</string>
-
 
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">Login</string>
@@ -35,6 +35,7 @@
         completions."
     </string>
     <string name="title_activity_add_user">Cadastro</string>
+    <string name="logout">Logout</string>
 
     <!-- Spinner Disciplina -->
     <string name="disciplina_prompt">Disciplina</string>
@@ -62,4 +63,12 @@
         <item>Programacao para Dispositivos Moveis</item>
         <item>Seguranca de Dados</item>
     </string-array>
+
+    <!-- Toasts -->
+    <string name="toast_adicionado">Projeto adicionado!</string>
+    <string name="toast_alterado">Projeto alterado!</string>
+    <string name="toast_removido">Projeto removido!</string>
+    <string name="toast_logout">Você saiu!</string>
+
+
 </resources>

@@ -24,6 +24,7 @@ import android.widget.TextView
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.app.Activity
+import android.util.Patterns
 import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_login.*
@@ -35,6 +36,10 @@ class AddUserActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+
+    // Email Pattern
+    val pattern = Patterns.EMAIL_ADDRESS
+
     private var mAuthTask: UserLoginTask? = null
     private lateinit var session: Session
     private lateinit var dao: UserDAO
@@ -50,6 +55,8 @@ class AddUserActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         this.cancel = findViewById(R.id.btLoginCancelar)
         this.register = findViewById(R.id.btAddUserRegister)
         this.register.visibility = View.INVISIBLE
+
+        email_sign_in_button.text = getString(R.string.register)
 
         // Set up the login form.
         populateAutoComplete()
@@ -157,11 +164,11 @@ class AddUserActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     }
 
     private fun isEmailValid(email: String): Boolean {
-        return email.contains("@")
+        return pattern.matcher(email).matches()
     }
 
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 4
+        return password.length > 3
     }
 
     /**
