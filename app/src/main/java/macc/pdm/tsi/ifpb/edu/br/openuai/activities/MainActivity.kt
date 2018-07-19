@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity() {
         this.itf = IntentFilter()
         this.itf.addAction(Intent.ACTION_USER_PRESENT)
 
-        session.logout()
-
         fab.setOnClickListener { view ->
             if(session.hasLogin()) {
                 val it = Intent(this, AddProjectActivity::class.java)
