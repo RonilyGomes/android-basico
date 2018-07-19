@@ -1,4 +1,4 @@
-package macc.pdm.tsi.ifpb.edu.br.openuai
+package macc.pdm.tsi.ifpb.edu.br.openuai.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -28,6 +28,10 @@ import android.util.Patterns
 import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_login.*
+import macc.pdm.tsi.ifpb.edu.br.openuai.R
+import macc.pdm.tsi.ifpb.edu.br.openuai.utils.Session
+import macc.pdm.tsi.ifpb.edu.br.openuai.dao.UserDAO
+import macc.pdm.tsi.ifpb.edu.br.openuai.model.User
 
 /**
  * A login screen that offers login via email/password.

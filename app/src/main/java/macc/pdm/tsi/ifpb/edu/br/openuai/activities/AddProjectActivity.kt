@@ -1,10 +1,12 @@
-package macc.pdm.tsi.ifpb.edu.br.openuai
+package macc.pdm.tsi.ifpb.edu.br.openuai.activities
 
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
+import macc.pdm.tsi.ifpb.edu.br.openuai.R
+import macc.pdm.tsi.ifpb.edu.br.openuai.model.Projeto
 
 class AddProjectActivity : AppCompatActivity() {
     private lateinit var etHeader: TextView

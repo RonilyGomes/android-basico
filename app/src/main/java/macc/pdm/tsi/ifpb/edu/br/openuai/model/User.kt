@@ -1,4 +1,4 @@
-package macc.pdm.tsi.ifpb.edu.br.openuai
+package macc.pdm.tsi.ifpb.edu.br.openuai.model
 
 import java.io.Serializable
 

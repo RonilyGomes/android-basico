@@ -1,4 +1,4 @@
-package macc.pdm.tsi.ifpb.edu.br.openuai
+package macc.pdm.tsi.ifpb.edu.br.openuai.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -25,11 +25,14 @@ import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_login.*
+import macc.pdm.tsi.ifpb.edu.br.openuai.R
+import macc.pdm.tsi.ifpb.edu.br.openuai.utils.Session
+import macc.pdm.tsi.ifpb.edu.br.openuai.dao.UserDAO
+import macc.pdm.tsi.ifpb.edu.br.openuai.model.User
 
 class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
@@ -294,7 +297,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
 
-        private var user:User = User(mEmail, mPassword)
+        private var user: User = User(mEmail, mPassword)
 
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.

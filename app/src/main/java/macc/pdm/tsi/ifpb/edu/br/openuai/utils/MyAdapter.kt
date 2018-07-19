@@ -1,4 +1,4 @@
-package macc.pdm.tsi.ifpb.edu.br.openuai
+package macc.pdm.tsi.ifpb.edu.br.openuai.utils
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.app.Activity
+import macc.pdm.tsi.ifpb.edu.br.openuai.R
+import macc.pdm.tsi.ifpb.edu.br.openuai.activities.AddProjectActivity
+import macc.pdm.tsi.ifpb.edu.br.openuai.activities.LoginActivity
+import macc.pdm.tsi.ifpb.edu.br.openuai.activities.MainActivity
+import macc.pdm.tsi.ifpb.edu.br.openuai.dao.ProjetoDAO
+import macc.pdm.tsi.ifpb.edu.br.openuai.model.Projeto
 
 open class MyAdapter(context: Context, resource: Int, list: ArrayList<Projeto>) :
         ArrayAdapter<Projeto>(context, resource, list) {

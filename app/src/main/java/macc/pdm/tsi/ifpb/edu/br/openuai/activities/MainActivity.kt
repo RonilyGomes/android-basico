@@ -1,7 +1,8 @@
-package macc.pdm.tsi.ifpb.edu.br.openuai
+package macc.pdm.tsi.ifpb.edu.br.openuai.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -10,6 +11,12 @@ import android.widget.ListView
 import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
+import macc.pdm.tsi.ifpb.edu.br.openuai.utils.MyAdapter
+import macc.pdm.tsi.ifpb.edu.br.openuai.R
+import macc.pdm.tsi.ifpb.edu.br.openuai.utils.Session
+import macc.pdm.tsi.ifpb.edu.br.openuai.dao.ProjetoDAO
+import macc.pdm.tsi.ifpb.edu.br.openuai.model.Projeto
+import macc.pdm.tsi.ifpb.edu.br.openuai.utils.DisplayReceiver
 
 class MainActivity : AppCompatActivity() {
     // Constantes de ação
@@ -24,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dao: ProjetoDAO
     private lateinit var lvProjetos: ListView
     private lateinit var session: Session
+    private lateinit var displayR: DisplayReceiver
+    private lateinit var itf: IntentFilter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +40,9 @@ class MainActivity : AppCompatActivity() {
 
         this.dao = ProjetoDAO(this)
         this.session = Session(this)
+        this.displayR = DisplayReceiver()
+        this.itf = IntentFilter()
+        this.itf.addAction(Intent.ACTION_USER_PRESENT)
 
         session.logout()
 
@@ -47,6 +59,16 @@ class MainActivity : AppCompatActivity() {
 
         this.lvProjetos = findViewById(R.id.lvMainProjetos)
         this.adapter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(this.displayR, this.itf)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(this.displayR)
     }
 
     fun adapter(){

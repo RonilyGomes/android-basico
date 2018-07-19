@@ -1,7 +1,9 @@
-package macc.pdm.tsi.ifpb.edu.br.openuai
+package macc.pdm.tsi.ifpb.edu.br.openuai.dao
 
 import android.content.ContentValues
 import android.content.Context
+import macc.pdm.tsi.ifpb.edu.br.openuai.utils.BancoHelper
+import macc.pdm.tsi.ifpb.edu.br.openuai.model.Projeto
 
 /**
  * Created by ifpb on 18/05/18.
