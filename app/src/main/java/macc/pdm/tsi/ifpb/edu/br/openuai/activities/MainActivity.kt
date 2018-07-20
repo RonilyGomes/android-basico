@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     val UPDATE = 2
     val DELETE = 3
     val LOGIN  = 4
+    val LOGIN_MENU = 5
 
     // Constantes de menu
     val MENU_LOGIN_LOGOUT = Menu.FIRST
@@ -99,7 +100,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 else{
                     val it = Intent(this, LoginActivity::class.java)
-                    startActivityForResult(it, LOGIN)
+                    it.putExtra("MENU_LOGIN", true)
+                    startActivityForResult(it, LOGIN_MENU)
                 }
                 return true
             }
@@ -130,6 +132,10 @@ class MainActivity : AppCompatActivity() {
             else if(requestCode == LOGIN) {
                 val it = Intent(this, AddProjectActivity::class.java)
                 startActivityForResult(it, INSERT)
+            }
+            else if(requestCode == LOGIN_MENU) {
+                val it = Intent(this, MainActivity::class.java)
+                startActivity(it)
             }
             this.adapter()
         }

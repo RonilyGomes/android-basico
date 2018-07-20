@@ -163,7 +163,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         var focusView: View? = null
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
+        if(TextUtils.isEmpty(passwordStr)){
+            password.error = getString(R.string.error_field_required)
+            focusView = password
+            cancel = true
+        }
+        else if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
             password.error = getString(R.string.error_invalid_password)
             focusView = password
             cancel = true
